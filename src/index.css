@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-main-color: #5b5fef;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --accent: #5b5fef;
+  --accent-foreground: #ffffff;
+  --radius: 0.85rem;
+
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-foreground: #18181b;
+  --surface-secondary: #f4f4f5;
+  --surface-secondary-foreground: #18181b;
+  --muted: #71717a;
+  --border: #e4e4e7;
+  --separator: #e4e4e7;
+}
+
+.dark {
+  --background: #101113;
+  --surface: #18191c;
+  --surface-foreground: #f4f4f5;
+  --surface-secondary: #212226;
+  --surface-secondary-foreground: #f4f4f5;
+  --muted: #9b9ba3;
+  --border: #2b2c31;
+  --separator: #2b2c31;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.dropdown__popover,
+.select__popover {
+  border-radius: var(--radius-2xl);
+}
