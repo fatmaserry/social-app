@@ -1,7 +1,10 @@
 import http from "@/lib/http";
 import { handleApiError } from "@/lib/handleApiError";
 import type { PostPrivacy } from "../posts.interface";
-import type { CreatedPost, CreatePostResponseType } from "./createPost.interface";
+import type {
+  CreatedPost,
+  CreatePostResponseType,
+} from "./createPost.interface";
 
 export async function createPost({
   body,

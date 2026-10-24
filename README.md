@@ -19,15 +19,15 @@ Built with React, TypeScript, Vite, and HeroUI.
 You’ll need Node.js 22 or newer.
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## Build
 
 ```sh
-npm run build
-npm run preview
+pnpm build
+pnpm preview
 ```
 
 Powered by Route Academy APIs.

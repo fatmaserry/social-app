@@ -5,7 +5,11 @@ import { UserAuthContext } from "@/app/providers/UserAuthProvider/UserAuthProvid
 import { likePost } from "./likePost.api";
 import type { PostsPage } from "../posts.interface";
 
-function toggleLike(page: PostsPage, postId: string, userId: string): PostsPage {
+function toggleLike(
+  page: PostsPage,
+  postId: string,
+  userId: string,
+): PostsPage {
   return {
     ...page,
     posts: page.posts.map((post) => {
@@ -33,11 +37,17 @@ export function useLikePost(queryKey: QueryKey) {
       if (!userData) return;
 
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => toggleLike(page, postId, userData._id)) };
+        return {
+          ...old,
+          pages: old.pages.map((page) =>
+            toggleLike(page, postId, userData._id),
+          ),
+        };
       });
 
       return { previous };

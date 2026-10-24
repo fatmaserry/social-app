@@ -21,7 +21,9 @@ function AuthLayout({
           <div className="flex size-16 items-center justify-center rounded-full bg-main-color">
             <Activity size="30" color="white" variant="Bold" />
           </div>
-          <p className="mt-5 text-sm font-semibold text-main-color">{eyebrow}</p>
+          <p className="mt-5 text-sm font-semibold text-main-color">
+            {eyebrow}
+          </p>
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
             {title}
           </h1>

@@ -8,10 +8,11 @@ export interface Comment {
   _id: string;
   content: string;
   image?: string;
-  user: CommentAuthor;
-  createdAt: string;
-  likesCount: number;
+  commentCreator: CommentAuthor;
+  post: string;
+  parentComment: string | null;
   likes: string[];
+  createdAt: string;
   repliesCount?: number;
 }
 

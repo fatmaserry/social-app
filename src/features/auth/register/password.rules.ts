@@ -8,7 +8,10 @@ export const passwordRules: PasswordRule[] = [
   { label: "One uppercase letter", test: (password) => /[A-Z]/.test(password) },
   { label: "One lowercase letter", test: (password) => /[a-z]/.test(password) },
   { label: "One number", test: (password) => /[0-9]/.test(password) },
-  { label: "One symbol (#?!@$%^&*-)", test: (password) => /[#?!@$%^&*-]/.test(password) },
+  {
+    label: "One symbol (#?!@$%^&*-)",
+    test: (password) => /[#?!@$%^&*-]/.test(password),
+  },
 ];
 
 export const passwordRequirementsMessage =
@@ -18,6 +21,9 @@ export function isValidPassword(password: string): boolean {
   return passwordRules.every((rule) => rule.test(password));
 }
 
-export function passwordsMatch(password: string, confirmPassword: string): boolean {
+export function passwordsMatch(
+  password: string,
+  confirmPassword: string,
+): boolean {
   return password.length > 0 && password === confirmPassword;
 }

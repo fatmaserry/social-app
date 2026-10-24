@@ -66,7 +66,9 @@ function Navbar() {
                   title={item.label}
                   className={({ isActive }) =>
                     `flex size-9 items-center justify-center rounded-full transition-colors ${
-                      isActive ? "bg-main-color/10" : "hover:bg-surface-secondary"
+                      isActive
+                        ? "bg-main-color/10"
+                        : "hover:bg-surface-secondary"
                     }`
                   }
                 >
@@ -115,7 +117,9 @@ function Navbar() {
                 <span className="sr-only">Open user menu</span>
                 <Avatar size="sm">
                   <Avatar.Image alt={userData.name} src={userData.photo} />
-                  <Avatar.Fallback>{getInitials(userData.name)}</Avatar.Fallback>
+                  <Avatar.Fallback>
+                    {getInitials(userData.name)}
+                  </Avatar.Fallback>
                 </Avatar>
               </button>
 
@@ -128,7 +132,9 @@ function Navbar() {
                     <p className="truncate text-sm font-semibold text-foreground">
                       {userData.name}
                     </p>
-                    <p className="truncate text-xs text-muted">{userData.email}</p>
+                    <p className="truncate text-xs text-muted">
+                      {userData.email}
+                    </p>
                   </div>
                   <Link
                     to="/profile"

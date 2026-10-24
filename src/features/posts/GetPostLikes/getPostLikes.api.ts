@@ -1,6 +1,9 @@
 import http from "@/lib/http";
 import { handleApiError } from "@/lib/handleApiError";
-import type { PostLikesPage, PostLikesResponseType } from "./getPostLikes.interface";
+import type {
+  PostLikesPage,
+  PostLikesResponseType,
+} from "./getPostLikes.interface";
 
 export async function getPostLikes({
   postId,
@@ -12,9 +15,12 @@ export async function getPostLikes({
   limit?: number;
 }): Promise<PostLikesPage> {
   try {
-    const res = await http.get<PostLikesResponseType>(`/posts/${postId}/likes`, {
-      params: { page, limit },
-    });
+    const res = await http.get<PostLikesResponseType>(
+      `/posts/${postId}/likes`,
+      {
+        params: { page, limit },
+      },
+    );
 
     return {
       likers: res.data.data.likes,

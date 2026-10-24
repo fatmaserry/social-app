@@ -3,7 +3,9 @@ import { Link } from "react-router";
 import AppButton from "@/SharedComponents/AppButton/AppButton";
 import { getInitials } from "@/lib/getInitials";
 
-const followerCountFormatter = new Intl.NumberFormat(undefined, { notation: "compact" });
+const followerCountFormatter = new Intl.NumberFormat(undefined, {
+  notation: "compact",
+});
 
 function UserCard({
   userId,
@@ -32,7 +34,9 @@ function UserCard({
           <Avatar.Fallback>{getInitials(name)}</Avatar.Fallback>
         </Avatar>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-foreground">{name}</p>
+          <p className="truncate text-sm font-semibold text-foreground">
+            {name}
+          </p>
           <p className="truncate text-xs text-muted">@{username}</p>
         </div>
       </Link>

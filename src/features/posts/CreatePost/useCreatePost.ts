@@ -32,13 +32,19 @@ export function useCreatePost(scope: FeedScope = "public") {
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) {
-          return { pages: [{ posts: [fullPost], nextPage: null }], pageParams: [1] };
+          return {
+            pages: [{ posts: [fullPost], nextPage: null }],
+            pageParams: [1],
+          };
         }
 
         const [firstPage, ...restPages] = old.pages;
         return {
           ...old,
-          pages: [{ ...firstPage, posts: [fullPost, ...firstPage.posts] }, ...restPages],
+          pages: [
+            { ...firstPage, posts: [fullPost, ...firstPage.posts] },
+            ...restPages,
+          ],
         };
       });
     },

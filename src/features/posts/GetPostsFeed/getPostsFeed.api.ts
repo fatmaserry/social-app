@@ -13,7 +13,10 @@ export async function getPostsFeed({
   limit?: number;
 }): Promise<PostsPage> {
   const path = scope === "following" ? "/posts/feed" : "/posts";
-  const params = scope === "following" ? { only: "following", page, limit } : { page, limit };
+  const params =
+    scope === "following"
+      ? { only: "following", page, limit }
+      : { page, limit };
 
   try {
     const res = await http.get<PostsResponseType>(path, { params });

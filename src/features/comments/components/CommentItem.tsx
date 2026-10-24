@@ -16,6 +16,7 @@ import { useDeleteComment } from "../DeleteComment/useDeleteComment";
 import { useReplies } from "../GetReplies/useReplies";
 import { useCreateReply } from "../CreateReply/useCreateReply";
 import { repliesKeys } from "../GetReplies/getReplies.keys";
+import LikesModal from "@/features/posts/GetPostLikes/LikesModal";
 import DeleteCommentDialog from "./DeleteCommentDialog";
 import CommentComposer from "./CommentComposer";
 import type { Comment } from "../comments.interface";
@@ -54,9 +55,11 @@ function CommentItem({
   );
 
   const deleteState = useOverlayState();
+  const likesState = useOverlayState();
 
   const isLiked = !!userData && comment.likes.includes(userData._id);
-  const isOwnComment = !!userData && userData._id === comment.user._id;
+  const isOwnComment =
+    !!userData && userData._id === comment.commentCreator._id;
 
   const hasExistingReplies = (comment.repliesCount ?? 0) > 0;
   const repliesQuery = useReplies(
@@ -87,10 +90,15 @@ function CommentItem({
 
   return (
     <div className="flex gap-2">
-      <Link to={`/profile/${comment.user._id}`}>
+      <Link to={`/profile/${comment.commentCreator._id}`}>
         <Avatar size="sm">
-          <Avatar.Image alt={comment.user.name} src={comment.user.photo} />
-          <Avatar.Fallback>{getInitials(comment.user.name)}</Avatar.Fallback>
+          <Avatar.Image
+            alt={comment.commentCreator.name}
+            src={comment.commentCreator.photo}
+          />
+          <Avatar.Fallback>
+            {getInitials(comment.commentCreator.name)}
+          </Avatar.Fallback>
         </Avatar>
       </Link>
 
@@ -98,10 +106,10 @@ function CommentItem({
         <div className="flex items-start justify-between gap-2">
           <div className="rounded-2xl bg-surface-secondary px-3 py-2">
             <Link
-              to={`/profile/${comment.user._id}`}
+              to={`/profile/${comment.commentCreator._id}`}
               className="text-xs font-semibold text-foreground hover:underline"
             >
-              {comment.user.name}
+              {comment.commentCreator.name}
             </Link>
 
             {isEditing ? (
@@ -177,8 +185,17 @@ function CommentItem({
               disabled={isLikePending}
               className={`cursor-pointer font-semibold ${isLiked ? "text-danger" : "hover:text-foreground"}`}
             >
-              Like{comment.likesCount > 0 && ` · ${comment.likesCount}`}
+              Like
             </button>
+            {comment.likes.length > 0 && (
+              <button
+                type="button"
+                onClick={likesState.open}
+                className="cursor-pointer font-semibold hover:text-foreground underline"
+              >
+                {comment.likes.length}
+              </button>
+            )}
             {!isReply && (
               <button
                 type="button"
@@ -192,6 +209,12 @@ function CommentItem({
             )}
           </div>
         )}
+
+        <LikesModal
+          postId={postId}
+          likerIds={comment.likes}
+          state={likesState}
+        />
 
         {isOwnComment && (
           <DeleteCommentDialog

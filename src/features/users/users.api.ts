@@ -16,9 +16,12 @@ export async function getSuggestedUsers({
   limit?: number;
 }): Promise<SuggestedUsersPage> {
   try {
-    const res = await http.get<SuggestedUsersResponseType>("/users/suggestions", {
-      params: { page, limit },
-    });
+    const res = await http.get<SuggestedUsersResponseType>(
+      "/users/suggestions",
+      {
+        params: { page, limit },
+      },
+    );
 
     return {
       users: res.data.data.suggestions,

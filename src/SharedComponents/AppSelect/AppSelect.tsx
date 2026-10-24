@@ -25,7 +25,11 @@ function AppSelect({
       <Select.Popover>
         <ListBox>
           {options.map((option) => (
-            <ListBox.Item key={option.id} id={option.id} textValue={option.label}>
+            <ListBox.Item
+              key={option.id}
+              id={option.id}
+              textValue={option.label}
+            >
               {option.label}
               <ListBox.ItemIndicator />
             </ListBox.Item>

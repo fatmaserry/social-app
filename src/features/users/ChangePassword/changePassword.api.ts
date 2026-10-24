@@ -10,10 +10,13 @@ export async function changePassword({
   newPassword: string;
 }): Promise<ChangePasswordResponseType["data"]> {
   try {
-    const res = await http.patch<ChangePasswordResponseType>("/users/change-password", {
-      password,
-      newPassword,
-    });
+    const res = await http.patch<ChangePasswordResponseType>(
+      "/users/change-password",
+      {
+        password,
+        newPassword,
+      },
+    );
 
     return res.data.data;
   } catch (err) {

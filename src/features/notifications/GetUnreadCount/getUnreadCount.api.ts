@@ -11,7 +11,9 @@ interface UnreadCountResponseType {
 
 export async function getUnreadCount(): Promise<number> {
   try {
-    const res = await http.get<UnreadCountResponseType>("/notifications/unread-count");
+    const res = await http.get<UnreadCountResponseType>(
+      "/notifications/unread-count",
+    );
 
     return res.data.data.unreadCount ?? 0;
   } catch (err) {

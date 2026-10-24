@@ -10,7 +10,8 @@ export function useChangePassword() {
     mutationFn: changePassword,
     onSuccess: (data) => {
       if (data.token) localStorage.setItem("user_tkn", data.token);
-      if (data.user) setUserData((old) => (old ? { ...old, ...data.user } : old));
+      if (data.user)
+        setUserData((old) => (old ? { ...old, ...data.user } : old));
     },
   });
 }

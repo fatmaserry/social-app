@@ -7,7 +7,9 @@ function bumpSharesCount(page: PostsPage, postId: string): PostsPage {
   return {
     ...page,
     posts: page.posts.map((post) =>
-      post._id === postId ? { ...post, sharesCount: (post.sharesCount ?? 0) + 1 } : post,
+      post._id === postId
+        ? { ...post, sharesCount: (post.sharesCount ?? 0) + 1 }
+        : post,
     ),
   };
 }
@@ -20,7 +22,10 @@ function prependPost(old: InfiniteData<PostsPage> | undefined, newPost: Post) {
   const [firstPage, ...restPages] = old.pages;
   return {
     ...old,
-    pages: [{ ...firstPage, posts: [newPost, ...firstPage.posts] }, ...restPages],
+    pages: [
+      { ...firstPage, posts: [newPost, ...firstPage.posts] },
+      ...restPages,
+    ],
   };
 }
 
@@ -31,11 +36,15 @@ export function useSharePost(queryKey: QueryKey) {
     mutationFn: (vars: { postId: string; body: string }) => sharePost(vars),
     onMutate: async ({ postId }) => {
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => bumpSharesCount(page, postId)) };
+        return {
+          ...old,
+          pages: old.pages.map((page) => bumpSharesCount(page, postId)),
+        };
       });
 
       return { previous };

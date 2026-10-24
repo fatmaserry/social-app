@@ -15,7 +15,10 @@ export async function uploadCoverPhoto({
   formData.append("privacy", privacy);
 
   try {
-    const res = await http.put<UploadCoverResponseType>("/users/upload-cover", formData);
+    const res = await http.put<UploadCoverResponseType>(
+      "/users/upload-cover",
+      formData,
+    );
 
     return res.data.data.cover;
   } catch (err) {

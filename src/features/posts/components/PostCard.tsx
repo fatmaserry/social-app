@@ -22,8 +22,10 @@ import CommentSection from "@/features/comments/components/CommentSection";
 
 function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
   const { userData } = useContext(UserAuthContext);
-  const { mutate: toggleLike, isPending: isLikePending } = useLikePost(queryKey);
-  const { mutate: toggleBookmark, isPending: isBookmarkPending } = useSavePost(queryKey);
+  const { mutate: toggleLike, isPending: isLikePending } =
+    useLikePost(queryKey);
+  const { mutate: toggleBookmark, isPending: isBookmarkPending } =
+    useSavePost(queryKey);
   const isLiked = !!userData && post.likes.includes(userData._id);
   const isOwnPost = !!userData && userData._id === post.user._id;
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -37,7 +39,10 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
   return (
     <article className="rounded-3xl border border-border bg-surface p-5">
       <div className="flex items-start justify-between gap-3">
-        <Link to={`/profile/${post.user._id}`} className="flex items-center gap-3">
+        <Link
+          to={`/profile/${post.user._id}`}
+          className="flex items-center gap-3"
+        >
           <Avatar size="md">
             <Avatar.Image alt={post.user.name} src={post.user.photo} />
             <Avatar.Fallback>{getInitials(post.user.name)}</Avatar.Fallback>
@@ -71,7 +76,11 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
                 <Dropdown.Item id="edit" onAction={editState.open}>
                   Edit post
                 </Dropdown.Item>
-                <Dropdown.Item id="delete" variant="danger" onAction={deleteState.open}>
+                <Dropdown.Item
+                  id="delete"
+                  variant="danger"
+                  onAction={deleteState.open}
+                >
                   Delete post
                 </Dropdown.Item>
               </Dropdown.Menu>
@@ -80,9 +89,15 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
         )}
       </div>
 
-      {isOwnPost && <UpdatePostModal post={post} queryKey={queryKey} state={editState} />}
       {isOwnPost && (
-        <DeletePostDialog postId={post._id} queryKey={queryKey} state={deleteState} />
+        <UpdatePostModal post={post} queryKey={queryKey} state={editState} />
+      )}
+      {isOwnPost && (
+        <DeletePostDialog
+          postId={post._id}
+          queryKey={queryKey}
+          state={deleteState}
+        />
       )}
       <ShareModal
         post={post.isShare && post.sharedPost ? post.sharedPost : post}
@@ -148,7 +163,9 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
           type="button"
           onClick={() => setCommentsOpen((open) => !open)}
           className={`flex cursor-pointer items-center gap-1.5 text-sm transition-colors ${
-            commentsOpen ? "text-main-color" : "text-muted hover:text-foreground"
+            commentsOpen
+              ? "text-main-color"
+              : "text-muted hover:text-foreground"
           }`}
         >
           <AppIcon name="comment" size={18} />
@@ -167,7 +184,9 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
           onClick={() => toggleBookmark(post._id)}
           disabled={isBookmarkPending}
           className={`ml-auto flex cursor-pointer items-end gap-1 text-sm transition-colors ${
-            post.bookmarked ? "text-main-color" : "text-muted hover:text-foreground"
+            post.bookmarked
+              ? "text-main-color"
+              : "text-muted hover:text-foreground"
           }`}
         >
           <AppIcon name="bookmark" size={18} />
@@ -175,7 +194,9 @@ function PostCard({ post, queryKey }: { post: Post; queryKey: QueryKey }) {
         </button>
       </div>
 
-      {commentsOpen && <CommentSection postId={post._id} postQueryKey={queryKey} />}
+      {commentsOpen && (
+        <CommentSection postId={post._id} postQueryKey={queryKey} />
+      )}
     </article>
   );
 }

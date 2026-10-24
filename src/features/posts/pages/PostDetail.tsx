@@ -41,7 +41,9 @@ function PostDetail() {
         </EmptyState>
       )}
 
-      {post && <PostCard post={post} queryKey={postDetailKeys.detail(postId!)} />}
+      {post && (
+        <PostCard post={post} queryKey={postDetailKeys.detail(postId!)} />
+      )}
     </>
   );
 }

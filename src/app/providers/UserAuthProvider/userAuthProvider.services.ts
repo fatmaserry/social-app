@@ -1,5 +1,8 @@
 import http from "@/lib/http";
-import type { UserData, UserDataResponseType } from "./userAuthProvider.interface";
+import type {
+  UserData,
+  UserDataResponseType,
+} from "./userAuthProvider.interface";
 
 export async function getUserData(): Promise<null | UserData> {
   try {

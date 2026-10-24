@@ -28,7 +28,10 @@ export function useCreateComment(postId: string, postQueryKey?: QueryKey) {
 
       queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, (old) => {
         if (!old) {
-          return { pages: [{ comments: [newComment], nextPage: null }], pageParams: [1] };
+          return {
+            pages: [{ comments: [newComment], nextPage: null }],
+            pageParams: [1],
+          };
         }
 
         const [firstPage, ...restPages] = old.pages;
@@ -42,10 +45,16 @@ export function useCreateComment(postId: string, postQueryKey?: QueryKey) {
       });
 
       if (postQueryKey) {
-        queryClient.setQueryData<InfiniteData<PostsPage>>(postQueryKey, (old) => {
-          if (!old) return old;
-          return { ...old, pages: old.pages.map((page) => bumpCommentsCount(page, postId)) };
-        });
+        queryClient.setQueryData<InfiniteData<PostsPage>>(
+          postQueryKey,
+          (old) => {
+            if (!old) return old;
+            return {
+              ...old,
+              pages: old.pages.map((page) => bumpCommentsCount(page, postId)),
+            };
+          },
+        );
       }
     },
   });

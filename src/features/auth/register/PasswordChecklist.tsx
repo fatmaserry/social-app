@@ -9,8 +9,14 @@ function PasswordChecklist({
   confirmPassword: string;
 }) {
   const checks = [
-    ...passwordRules.map((rule) => ({ label: rule.label, passed: rule.test(password) })),
-    { label: "Passwords match", passed: passwordsMatch(password, confirmPassword) },
+    ...passwordRules.map((rule) => ({
+      label: rule.label,
+      passed: rule.test(password),
+    })),
+    {
+      label: "Passwords match",
+      passed: passwordsMatch(password, confirmPassword),
+    },
   ];
 
   return (

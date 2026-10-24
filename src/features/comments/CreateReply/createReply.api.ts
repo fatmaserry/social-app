@@ -1,6 +1,5 @@
 import http from "@/lib/http";
 import { handleApiError } from "@/lib/handleApiError";
-import { toComment } from "../comments.mappers";
 import type { Comment } from "../comments.interface";
 import type { CreateReplyResponseType } from "./createReply.interface";
 
@@ -27,7 +26,7 @@ export async function createReply({
       formData,
     );
 
-    return toComment(res.data.data.reply);
+    return res.data.data.reply;
   } catch (err) {
     handleApiError(err);
   }

@@ -1,10 +1,10 @@
-import type { RawComment } from "../comments.mappers";
+import type { Comment } from "../comments.interface";
 
 export interface CommentsResponseType {
   success: boolean;
   message: string;
   data: {
-    comments: RawComment[];
+    comments: Comment[];
   };
   meta: {
     pagination: {

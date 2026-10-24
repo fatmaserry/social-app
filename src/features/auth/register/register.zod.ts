@@ -1,5 +1,9 @@
 import * as zod from "zod";
-import { isValidPassword, passwordRequirementsMessage, passwordsMatch } from "./password.rules";
+import {
+  isValidPassword,
+  passwordRequirementsMessage,
+  passwordsMatch,
+} from "./password.rules";
 
 export const registerSchema = zod
   .object({
@@ -7,7 +11,9 @@ export const registerSchema = zod
     username: zod.string().regex(/^[a-zA-Z0-9_\s]+$/, "Enter a valid username"),
     email: zod.email(),
     password: zod.string().refine(isValidPassword, passwordRequirementsMessage),
-    rePassword: zod.string().refine(isValidPassword, passwordRequirementsMessage),
+    rePassword: zod
+      .string()
+      .refine(isValidPassword, passwordRequirementsMessage),
     dateOfBirth: zod.string().refine(function (value) {
       const birthDate = new Date(value);
       const currentYear = new Date();
@@ -15,9 +21,12 @@ export const registerSchema = zod
     }, "Your Age Must Be Above 20 Years Old"),
     gender: zod.enum(["male", "female"]),
   })
-  .refine(function (value) {
-    return passwordsMatch(value.password, value.rePassword);
-  }, {
-    path: ["rePassword"],
-    error: "Password not the same as Confirm Password",
-  });
+  .refine(
+    function (value) {
+      return passwordsMatch(value.password, value.rePassword);
+    },
+    {
+      path: ["rePassword"],
+      error: "Password not the same as Confirm Password",
+    },
+  );

@@ -29,20 +29,32 @@ export function useCreateReply(postId: string, commentId: string) {
 
       queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, (old) => {
         if (!old) {
-          return { pages: [{ comments: [newReply], nextPage: null }], pageParams: [1] };
+          return {
+            pages: [{ comments: [newReply], nextPage: null }],
+            pageParams: [1],
+          };
         }
 
         const [firstPage, ...restPages] = old.pages;
         return {
           ...old,
-          pages: [{ ...firstPage, comments: [newReply, ...firstPage.comments] }, ...restPages],
+          pages: [
+            { ...firstPage, comments: [newReply, ...firstPage.comments] },
+            ...restPages,
+          ],
         };
       });
 
-      queryClient.setQueryData<InfiniteData<CommentsPage>>(parentQueryKey, (old) => {
-        if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => bumpRepliesCount(page, commentId)) };
-      });
+      queryClient.setQueryData<InfiniteData<CommentsPage>>(
+        parentQueryKey,
+        (old) => {
+          if (!old) return old;
+          return {
+            ...old,
+            pages: old.pages.map((page) => bumpRepliesCount(page, commentId)),
+          };
+        },
+      );
     },
   });
 }

@@ -29,11 +29,17 @@ function ChangePasswordForm() {
 
   function onSubmit(values: ChangePasswordFormData) {
     return toast
-      .promise(mutateAsync({ password: values.password, newPassword: values.newPassword }), {
-        loading: "Updating password…",
-        success: "Password updated",
-        error: (err) => err.message,
-      })
+      .promise(
+        mutateAsync({
+          password: values.password,
+          newPassword: values.newPassword,
+        }),
+        {
+          loading: "Updating password…",
+          success: "Password updated",
+          error: (err) => err.message,
+        },
+      )
       .then(() => reset())
       .catch(() => {});
   }
@@ -76,7 +82,12 @@ function ChangePasswordForm() {
         confirmPassword={confirmNewPassword ?? ""}
       />
 
-      <AppButton isDisabled={isPending} fullWidth type="submit" className="mt-2">
+      <AppButton
+        isDisabled={isPending}
+        fullWidth
+        type="submit"
+        className="mt-2"
+      >
         Update password
       </AppButton>
     </Form>

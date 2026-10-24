@@ -6,7 +6,13 @@ import { useMarkAllAsRead } from "../MarkAllAsRead/useMarkAllAsRead";
 import NotificationItem from "./NotificationItem";
 import type { AppNotification } from "../notifications.interface";
 
-function NotificationsPanel({ isOpen, onNavigate }: { isOpen: boolean; onNavigate: () => void }) {
+function NotificationsPanel({
+  isOpen,
+  onNavigate,
+}: {
+  isOpen: boolean;
+  onNavigate: () => void;
+}) {
   const { data, isLoading } = useNotifications(isOpen);
   const { mutate: markAsRead } = useMarkAsRead();
   const { mutate: markAllAsRead, isPending: isMarkingAll } = useMarkAllAsRead();
@@ -51,7 +57,9 @@ function NotificationsPanel({ isOpen, onNavigate }: { isOpen: boolean; onNavigat
         )}
 
         {!isLoading && notifications.length === 0 && (
-          <p className="py-8 text-center text-sm text-muted">You're all caught up.</p>
+          <p className="py-8 text-center text-sm text-muted">
+            You're all caught up.
+          </p>
         )}
 
         {notifications.map((notification) => (

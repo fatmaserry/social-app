@@ -25,7 +25,8 @@ export interface NotificationEntityUser extends NotificationActor {
   bookmarksCount?: number;
 }
 
-export type NotificationType = "like_post" | "comment_post" | "share_post" | (string & {});
+export type NotificationType =
+  "like_post" | "comment_post" | "share_post" | (string & {});
 
 export interface AppNotification {
   _id: string;

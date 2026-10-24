@@ -15,7 +15,9 @@ function MentionAutocomplete({
 
   return (
     <div className="absolute z-20 mt-1 w-64 overflow-hidden rounded-2xl border border-border bg-surface p-1.5 shadow-overlay">
-      {isLoading && <p className="px-2.5 py-2 text-xs text-muted">Searching…</p>}
+      {isLoading && (
+        <p className="px-2.5 py-2 text-xs text-muted">Searching…</p>
+      )}
 
       {users?.map((user) => (
         <button
@@ -32,7 +34,9 @@ function MentionAutocomplete({
             <Avatar.Fallback>{getInitials(user.name)}</Avatar.Fallback>
           </Avatar>
           <div className="min-w-0">
-            <p className="truncate text-sm font-medium text-foreground">{user.name}</p>
+            <p className="truncate text-sm font-medium text-foreground">
+              {user.name}
+            </p>
             <p className="truncate text-xs text-muted">@{user.username}</p>
           </div>
         </button>

@@ -1,7 +1,6 @@
 import http from "@/lib/http";
 import { handleApiError } from "@/lib/handleApiError";
 import type { CommentsPage } from "../comments.interface";
-import { toComment } from "../comments.mappers";
 import type { CommentsResponseType } from "./getComments.interface";
 
 export async function getComments({
@@ -14,12 +13,15 @@ export async function getComments({
   limit?: number;
 }): Promise<CommentsPage> {
   try {
-    const res = await http.get<CommentsResponseType>(`/posts/${postId}/comments`, {
-      params: { page, limit },
-    });
+    const res = await http.get<CommentsResponseType>(
+      `/posts/${postId}/comments`,
+      {
+        params: { page, limit },
+      },
+    );
 
     return {
-      comments: res.data.data.comments.map(toComment),
+      comments: res.data.data.comments,
       nextPage: res.data.meta.pagination.nextPage ?? null,
     };
   } catch (err) {

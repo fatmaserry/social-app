@@ -14,11 +14,15 @@ export function useDeletePost(queryKey: QueryKey) {
     mutationFn: (postId: string) => deletePost(postId),
     onMutate: async (postId: string) => {
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => removePost(page, postId)) };
+        return {
+          ...old,
+          pages: old.pages.map((page) => removePost(page, postId)),
+        };
       });
 
       return { previous };

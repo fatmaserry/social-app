@@ -6,8 +6,15 @@ import CommentComposer from "./CommentComposer";
 import CommentItem from "./CommentItem";
 import { commentsKeys } from "../GetComments/getComments.keys";
 
-function CommentSection({ postId, postQueryKey }: { postId: string; postQueryKey: QueryKey }) {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useComments(postId);
+function CommentSection({
+  postId,
+  postQueryKey,
+}: {
+  postId: string;
+  postQueryKey: QueryKey;
+}) {
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useComments(postId);
   const { mutateAsync: createComment } = useCreateComment(postId, postQueryKey);
 
   const comments = data?.pages.flatMap((page) => page.comments) ?? [];
@@ -27,7 +34,9 @@ function CommentSection({ postId, postQueryKey }: { postId: string; postQueryKey
       )}
 
       {!isLoading && comments.length === 0 && (
-        <p className="py-1 text-center text-sm text-muted">No comments yet. Be the first.</p>
+        <p className="py-1 text-center text-sm text-muted">
+          No comments yet. Be the first.
+        </p>
       )}
 
       {comments.map((comment) => (

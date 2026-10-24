@@ -14,42 +14,45 @@ import Layout from "@/app/layout/Layout";
 import ProtectedPageLayout from "@/app/routing/ProtectedPageLayout";
 import AuthProtected from "@/app/routing/AuthProtected";
 
-export const router = createBrowserRouter([
-  {
-    path: "",
-    element: <Layout />,
-    children: [
-      {
-        element: <ProtectedPageLayout />,
-        children: [
-          { index: true, element: <Posts /> },
-          { path: "posts", element: <Posts /> },
-          { path: "posts/:postId", element: <PostDetail /> },
-          { path: "bookmarks", element: <Bookmarks /> },
-          { path: "profile", element: <Profile /> },
-          { path: "profile/:userId", element: <UserProfile /> },
-          { path: "explore", element: <ExplorePeople /> },
-          { path: "settings", element: <AccountSettings /> },
-          { path: "notifications", element: <Notifications /> },
-        ],
-      },
-      {
-        path: "login",
-        element: (
-          <AuthProtected>
-            <Login />
-          </AuthProtected>
-        ),
-      },
-      {
-        path: "register",
-        element: (
-          <AuthProtected>
-            <Register />
-          </AuthProtected>
-        ),
-      },
-      { path: "*", element: <NotFound /> },
-    ],
-  },
-], { basename: import.meta.env.BASE_URL });
+export const router = createBrowserRouter(
+  [
+    {
+      path: "",
+      element: <Layout />,
+      children: [
+        {
+          element: <ProtectedPageLayout />,
+          children: [
+            { index: true, element: <Posts /> },
+            { path: "posts", element: <Posts /> },
+            { path: "posts/:postId", element: <PostDetail /> },
+            { path: "bookmarks", element: <Bookmarks /> },
+            { path: "profile", element: <Profile /> },
+            { path: "profile/:userId", element: <UserProfile /> },
+            { path: "explore", element: <ExplorePeople /> },
+            { path: "settings", element: <AccountSettings /> },
+            { path: "notifications", element: <Notifications /> },
+          ],
+        },
+        {
+          path: "login",
+          element: (
+            <AuthProtected>
+              <Login />
+            </AuthProtected>
+          ),
+        },
+        {
+          path: "register",
+          element: (
+            <AuthProtected>
+              <Register />
+            </AuthProtected>
+          ),
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL },
+);

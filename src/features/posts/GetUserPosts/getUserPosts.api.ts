@@ -13,9 +13,12 @@ export async function getUserPosts({
   limit?: number;
 }): Promise<PostsPage> {
   try {
-    const res = await http.get<UserPostsResponseType>(`/users/${userId}/posts`, {
-      params: { page, limit },
-    });
+    const res = await http.get<UserPostsResponseType>(
+      `/users/${userId}/posts`,
+      {
+        params: { page, limit },
+      },
+    );
 
     return {
       posts: res.data.data.posts,

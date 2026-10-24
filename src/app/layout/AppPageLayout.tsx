@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import AppSidebar from "./AppSidebar";
 import SuggestedFriendsSidebar from "@/features/users/components/SuggestedFriendsSidebar";
 
-
 function AppPageLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex w-full justify-center gap-6 px-4 py-8 md:flex-row">

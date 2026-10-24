@@ -10,7 +10,9 @@ function patchPost(
 ): PostsPage {
   return {
     ...page,
-    posts: page.posts.map((post) => (post._id === postId ? { ...post, ...patch } : post)),
+    posts: page.posts.map((post) =>
+      post._id === postId ? { ...post, ...patch } : post,
+    ),
   };
 }
 
@@ -26,13 +28,16 @@ export function useUpdatePost(queryKey: QueryKey) {
     }) => updatePost(vars),
     onMutate: async ({ postId, body, privacy }) => {
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) return old;
         return {
           ...old,
-          pages: old.pages.map((page) => patchPost(page, postId, { body, privacy })),
+          pages: old.pages.map((page) =>
+            patchPost(page, postId, { body, privacy }),
+          ),
         };
       });
 

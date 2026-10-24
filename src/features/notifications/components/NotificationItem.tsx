@@ -21,13 +21,22 @@ function NotificationItem({
       }`}
     >
       <Avatar size="sm">
-        <Avatar.Image alt={notification.actor.name} src={notification.actor.photo} />
-        <Avatar.Fallback>{getInitials(notification.actor.name)}</Avatar.Fallback>
+        <Avatar.Image
+          alt={notification.actor.name}
+          src={notification.actor.photo}
+        />
+        <Avatar.Fallback>
+          {getInitials(notification.actor.name)}
+        </Avatar.Fallback>
       </Avatar>
 
       <div className="min-w-0 flex-1">
-        <p className="text-sm text-foreground">{getNotificationMessage(notification)}</p>
-        <p className="mt-0.5 text-xs text-muted">{timeAgo(notification.createdAt)} ago</p>
+        <p className="text-sm text-foreground">
+          {getNotificationMessage(notification)}
+        </p>
+        <p className="mt-0.5 text-xs text-muted">
+          {timeAgo(notification.createdAt)} ago
+        </p>
         <NotificationEntityPreview notification={notification} />
       </div>
 

@@ -12,7 +12,10 @@ function SharedPostEmbed({ post }: { post: Post }) {
 
   return (
     <div className="rounded-2xl border border-border p-3">
-      <Link to={`/profile/${post.user._id}`} className="flex items-center gap-2">
+      <Link
+        to={`/profile/${post.user._id}`}
+        className="flex items-center gap-2"
+      >
         <Avatar size="sm">
           <Avatar.Image alt={post.user.name} src={post.user.photo} />
           <Avatar.Fallback>{getInitials(post.user.name)}</Avatar.Fallback>

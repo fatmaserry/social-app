@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 
-function findActiveMention(text: string, cursor: number): { query: string; start: number } | null {
+function findActiveMention(
+  text: string,
+  cursor: number,
+): { query: string; start: number } | null {
   const textBeforeCursor = text.slice(0, cursor);
   const atIndex = textBeforeCursor.lastIndexOf("@");
   if (atIndex === -1) return null;
@@ -24,7 +27,10 @@ export function useMentionAutocomplete({
   const [cursor, setCursor] = useState(0);
   const [isDismissed, setIsDismissed] = useState(false);
 
-  const mention = useMemo(() => findActiveMention(value, cursor), [value, cursor]);
+  const mention = useMemo(
+    () => findActiveMention(value, cursor),
+    [value, cursor],
+  );
 
   function trackCursor(target: HTMLTextAreaElement) {
     setCursor(target.selectionStart ?? 0);

@@ -22,7 +22,10 @@ function NotificationBell() {
         )}
       </Dropdown.Trigger>
       <Dropdown.Popover placement="bottom end">
-        <NotificationsPanel isOpen={isOpen} onNavigate={() => setIsOpen(false)} />
+        <NotificationsPanel
+          isOpen={isOpen}
+          onNavigate={() => setIsOpen(false)}
+        />
       </Dropdown.Popover>
     </Dropdown>
   );

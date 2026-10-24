@@ -5,7 +5,11 @@ import { UserAuthContext } from "@/app/providers/UserAuthProvider/UserAuthProvid
 import { likeComment } from "./likeComment.api";
 import type { CommentsPage } from "../comments.interface";
 
-function toggleLike(page: CommentsPage, commentId: string, userId: string): CommentsPage {
+function toggleLike(
+  page: CommentsPage,
+  commentId: string,
+  userId: string,
+): CommentsPage {
   return {
     ...page,
     comments: page.comments.map((comment) => {
@@ -17,7 +21,6 @@ function toggleLike(page: CommentsPage, commentId: string, userId: string): Comm
         likes: alreadyLiked
           ? comment.likes.filter((id) => id !== userId)
           : [...comment.likes, userId],
-        likesCount: alreadyLiked ? comment.likesCount - 1 : comment.likesCount + 1,
       };
     }),
   };
@@ -33,13 +36,16 @@ export function useLikeComment(postId: string, queryKey: QueryKey) {
       if (!userData) return;
 
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, (old) => {
         if (!old) return old;
         return {
           ...old,
-          pages: old.pages.map((page) => toggleLike(page, commentId, userData._id)),
+          pages: old.pages.map((page) =>
+            toggleLike(page, commentId, userData._id),
+          ),
         };
       });
 

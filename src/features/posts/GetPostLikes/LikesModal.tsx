@@ -2,13 +2,31 @@ import { Avatar, Modal, Spinner } from "@heroui/react";
 import type { UseOverlayStateReturn } from "@heroui/react";
 import { getInitials } from "@/lib/getInitials";
 import { usePostLikes } from "./usePostLikes";
+import { useLikersByIds } from "./useLikersByIds";
 
-function LikesModal({ postId, state }: { postId: string; state: UseOverlayStateReturn }) {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostLikes(
-    postId,
-    state.isOpen,
+function LikesModal({
+  postId,
+  likerIds,
+  state,
+}: {
+  postId: string;
+  likerIds?: string[];
+  state: UseOverlayStateReturn;
+}) {
+  const isCommentLikes = !!likerIds;
+  const postLikes = usePostLikes(postId, state.isOpen && !isCommentLikes);
+  const commentLikes = useLikersByIds(
+    likerIds ?? [],
+    state.isOpen && isCommentLikes,
   );
-  const likers = data?.pages.flatMap((page) => page.likers) ?? [];
+
+  const { fetchNextPage, hasNextPage, isFetchingNextPage } = postLikes;
+  const isLoading = isCommentLikes
+    ? commentLikes.isLoading
+    : postLikes.isLoading;
+  const likers = isCommentLikes
+    ? commentLikes.likers
+    : (postLikes.data?.pages.flatMap((page) => page.likers) ?? []);
 
   return (
     <Modal isOpen={state.isOpen} onOpenChange={state.setOpen}>
@@ -28,7 +46,9 @@ function LikesModal({ postId, state }: { postId: string; state: UseOverlayStateR
               )}
 
               {!isLoading && likers.length === 0 && (
-                <p className="py-6 text-center text-sm text-muted">No likes yet.</p>
+                <p className="py-6 text-center text-sm text-muted">
+                  No likes yet.
+                </p>
               )}
 
               <div className="flex flex-col gap-1">
@@ -39,12 +59,18 @@ function LikesModal({ postId, state }: { postId: string; state: UseOverlayStateR
                   >
                     <Avatar size="sm">
                       <Avatar.Image alt={liker.name} src={liker.photo} />
-                      <Avatar.Fallback>{getInitials(liker.name)}</Avatar.Fallback>
+                      <Avatar.Fallback>
+                        {getInitials(liker.name)}
+                      </Avatar.Fallback>
                     </Avatar>
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-foreground">{liker.name}</p>
+                      <p className="truncate text-sm font-medium text-foreground">
+                        {liker.name}
+                      </p>
                       {liker.username && (
-                        <p className="truncate text-xs text-muted">@{liker.username}</p>
+                        <p className="truncate text-xs text-muted">
+                          @{liker.username}
+                        </p>
                       )}
                     </div>
                   </div>

@@ -11,12 +11,15 @@ export function useUploadCoverPhoto() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (vars: { cover: File; privacy: PostPrivacy }) => uploadCoverPhoto(vars),
+    mutationFn: (vars: { cover: File; privacy: PostPrivacy }) =>
+      uploadCoverPhoto(vars),
     onSuccess: (coverUrl) => {
       setUserData((old) => (old ? { ...old, cover: coverUrl } : old));
       queryClient.invalidateQueries({ queryKey: postsFeedKeys.all });
       if (userData) {
-        queryClient.invalidateQueries({ queryKey: userPostsKeys.user(userData._id) });
+        queryClient.invalidateQueries({
+          queryKey: userPostsKeys.user(userData._id),
+        });
       }
     },
   });

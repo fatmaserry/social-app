@@ -6,7 +6,10 @@ import type { CommentsPage } from "../comments.interface";
 import type { PostsPage } from "@/features/posts/posts.interface";
 
 function removeComment(page: CommentsPage, commentId: string): CommentsPage {
-  return { ...page, comments: page.comments.filter((comment) => comment._id !== commentId) };
+  return {
+    ...page,
+    comments: page.comments.filter((comment) => comment._id !== commentId),
+  };
 }
 
 function dropCommentsCount(page: PostsPage, postId: string): PostsPage {
@@ -20,12 +23,18 @@ function dropCommentsCount(page: PostsPage, postId: string): PostsPage {
   };
 }
 
-function dropRepliesCount(page: CommentsPage, parentCommentId: string): CommentsPage {
+function dropRepliesCount(
+  page: CommentsPage,
+  parentCommentId: string,
+): CommentsPage {
   return {
     ...page,
     comments: page.comments.map((comment) =>
       comment._id === parentCommentId
-        ? { ...comment, repliesCount: Math.max(0, (comment.repliesCount ?? 1) - 1) }
+        ? {
+            ...comment,
+            repliesCount: Math.max(0, (comment.repliesCount ?? 1) - 1),
+          }
         : comment,
     ),
   };
@@ -43,18 +52,28 @@ export function useDeleteComment(
     mutationFn: (commentId: string) => deleteComment({ postId, commentId }),
     onMutate: async (commentId: string) => {
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<CommentsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<CommentsPage>>(queryKey, (old) => {
         if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => removeComment(page, commentId)) };
+        return {
+          ...old,
+          pages: old.pages.map((page) => removeComment(page, commentId)),
+        };
       });
 
       if (postQueryKey) {
-        queryClient.setQueryData<InfiniteData<PostsPage>>(postQueryKey, (old) => {
-          if (!old) return old;
-          return { ...old, pages: old.pages.map((page) => dropCommentsCount(page, postId)) };
-        });
+        queryClient.setQueryData<InfiniteData<PostsPage>>(
+          postQueryKey,
+          (old) => {
+            if (!old) return old;
+            return {
+              ...old,
+              pages: old.pages.map((page) => dropCommentsCount(page, postId)),
+            };
+          },
+        );
       }
 
       if (parentCommentId) {
@@ -64,7 +83,9 @@ export function useDeleteComment(
             if (!old) return old;
             return {
               ...old,
-              pages: old.pages.map((page) => dropRepliesCount(page, parentCommentId)),
+              pages: old.pages.map((page) =>
+                dropRepliesCount(page, parentCommentId),
+              ),
             };
           },
         );

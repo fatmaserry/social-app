@@ -11,10 +11,12 @@ export function useMarkAllAsRead() {
     mutationFn: markAllAsRead,
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: notificationsKeys.list });
-      const previousList = queryClient.getQueryData<InfiniteData<NotificationsPage>>(
-        notificationsKeys.list,
+      const previousList = queryClient.getQueryData<
+        InfiniteData<NotificationsPage>
+      >(notificationsKeys.list);
+      const previousCount = queryClient.getQueryData<number>(
+        notificationsKeys.unreadCount,
       );
-      const previousCount = queryClient.getQueryData<number>(notificationsKeys.unreadCount);
 
       queryClient.setQueryData<InfiniteData<NotificationsPage>>(
         notificationsKeys.list,
@@ -42,12 +44,17 @@ export function useMarkAllAsRead() {
         queryClient.setQueryData(notificationsKeys.list, context.previousList);
       }
       if (context?.previousCount !== undefined) {
-        queryClient.setQueryData(notificationsKeys.unreadCount, context.previousCount);
+        queryClient.setQueryData(
+          notificationsKeys.unreadCount,
+          context.previousCount,
+        );
       }
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: notificationsKeys.list });
-      queryClient.invalidateQueries({ queryKey: notificationsKeys.unreadCount });
+      queryClient.invalidateQueries({
+        queryKey: notificationsKeys.unreadCount,
+      });
     },
   });
 }

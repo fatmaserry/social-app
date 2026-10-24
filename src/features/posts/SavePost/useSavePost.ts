@@ -19,11 +19,15 @@ export function useSavePost(queryKey: QueryKey) {
     mutationFn: (postId: string) => savePost(postId),
     onMutate: async (postId: string) => {
       await queryClient.cancelQueries({ queryKey });
-      const previous = queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
+      const previous =
+        queryClient.getQueryData<InfiniteData<PostsPage>>(queryKey);
 
       queryClient.setQueryData<InfiniteData<PostsPage>>(queryKey, (old) => {
         if (!old) return old;
-        return { ...old, pages: old.pages.map((page) => toggleSaved(page, postId)) };
+        return {
+          ...old,
+          pages: old.pages.map((page) => toggleSaved(page, postId)),
+        };
       });
 
       return { previous };

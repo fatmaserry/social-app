@@ -1,7 +1,6 @@
 import http from "@/lib/http";
 import { handleApiError } from "@/lib/handleApiError";
 import type { CommentsPage } from "../comments.interface";
-import { toComment } from "../comments.mappers";
 import type { RepliesResponseType } from "./getReplies.interface";
 
 export async function getReplies({
@@ -22,7 +21,7 @@ export async function getReplies({
     );
 
     return {
-      comments: res.data.data.replies.map(toComment),
+      comments: res.data.data.replies,
       nextPage: res.data.meta.pagination.nextPage ?? null,
     };
   } catch (err) {
