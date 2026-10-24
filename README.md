@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# Social App
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Good conversations deserve a home. Social App is a place to share what is on your mind, find people worth following, and keep up with the moments your community shares.
 
-Currently, two official plugins are available:
+Create posts, add photos, and make the conversation your own with likes, comments, replies, shares, bookmarks, and mentions. A notification count that stays up to date helps you keep track of activity, while profile pages make it easy to discover who is part of each community.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What you can do
 
-## React Compiler
+- Share text and photo posts with privacy controls
+- Discover people and follow their updates
+- Like, comment, reply, share, and bookmark posts
+- Mention people in conversations
+- See notifications and browse follower lists
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Built with React, TypeScript, Vite, and HeroUI.
 
-## Expanding the Oxlint configuration
+## Run locally
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+You’ll need Node.js 22 or newer.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Build
+
+```sh
+npm run build
+npm run preview
+```
+
+Powered by Route Academy APIs.
